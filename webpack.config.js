@@ -2,7 +2,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserJSPlugin = require("terser-webpack-plugin")
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const nodeExternals = require("webpack-node-externals")
 const webpack = require("webpack")
 const path = require("path")
@@ -18,7 +17,7 @@ module.exports = (env, argv) => {
         output: {filename: "script.js", chunkFilename: "script.js", path: path.resolve(__dirname, "./dist")},
         resolve: {extensions: [".js", ".jsx", ".ts", ".tsx"], alias: {"react-dom$": "react-dom/profiling", "scheduler/tracing": "scheduler/tracing-profiling"}},
         performance: {hints: false},
-        optimization: {minimize: false, minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()], moduleIds: "named"},
+        optimization: {minimize: false, minimizer: [new TerserJSPlugin()], moduleIds: "named"},
         module: {
             rules: [
                 {test: /\.(jpe?g|png|gif|svg|mp3|wav|mp4)$/, exclude, use: [{loader: "file-loader", options: {name: "[path][name].[ext]"}}]},

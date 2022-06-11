@@ -20,6 +20,8 @@ import "../styles/lolisleep.less"
 
 const images = [loli1, loli2, loli3]
 
+let lastPos = 0
+
 const LoliSleep: React.FunctionComponent = (props) => {
     const progressBar = useRef(null) as React.RefObject<HTMLProgressElement>
     let [track, setTrack] = useState("")
@@ -49,7 +51,12 @@ const LoliSleep: React.FunctionComponent = (props) => {
         return ""
     }
 
-    const changeImage = () => {
+    const changeImageInit = (event: any) => {
+        lastPos = event.clientY
+    }
+
+    const changeImage = (event: any) => {
+        if (Math.abs(lastPos - event.clientY) > 3) return
         let index = images.findIndex((i) => i === image)
         if (index >= images.length - 1) index = -1
         setImage(images[index + 1])
@@ -92,7 +99,7 @@ const LoliSleep: React.FunctionComponent = (props) => {
                 <progress ref={progressBar} max="100" onClick={(event) => seek(event)} defaultValue="0" value="0" style={{display: track ? "flex" : "none"}}></progress>
             </div>
             <div className="loli-img-container">
-                <img className="loli-image" src={image} onClick={changeImage}/>
+                <img className="loli-image" src={image} onMouseDown={changeImageInit} onMouseUp={changeImage}/>
             </div>
         </section>
         <Footer track={getTrack()}/>

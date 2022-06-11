@@ -7,6 +7,7 @@ import functions from "./structures/functions"
 const App: React.FunctionComponent = () => {
   useEffect(() => {
     functions.preventDragging()
+    functions.dragScroll(true)
   }, [])
 
   return (
